@@ -1,0 +1,100 @@
+﻿<Window
+    x:Class="TestTask_Junior_MelnikovaInna_2._0.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TestTask_Junior_MelnikovaInna_2._0"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:TestTask_Junior_MelnikovaInna_2._0.Views"
+    Title="MAINWINDOW"
+    Width="525"
+    Height="350"
+    MinWidth="500"
+    MinHeight="350"
+    Style="{StaticResource CustomStyleWindow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Border Background="White">
+            <AdornerDecorator>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  list of all tasks  -->
+                    <Grid>
+                        <Border Background="#f9f9f9">
+                            <Grid>
+                                <StackPanel>
+                                    <Button
+                                        Height="26"
+                                        Command="{Binding Task3ToGo}"
+                                        Content="{Binding Task3ToGo.CommandName}"
+                                        Style="{StaticResource buttonTasksStyle}" />
+                                    <Line
+                                        Stroke="#40b1e1"
+                                        StrokeThickness="1"
+                                        X1="0"
+                                        X2="130"
+                                        Y1="0"
+                                        Y2="0" />
+                                    <Button
+                                        Height="26"
+                                        Command="{Binding Task4ToGo}"
+                                        Content="{Binding Task4ToGo.CommandName}"
+                                        Style="{StaticResource buttonTasksStyle}" />
+                                    <Line
+                                        Stroke="#40b1e1"
+                                        StrokeThickness="1"
+                                        X1="0"
+                                        X2="130"
+                                        Y1="0"
+                                        Y2="0" />
+                                    <Button
+                                        Height="26"
+                                        Command="{Binding}"
+                                        Content="{Binding CommandName}"
+                                        DataContext="{Binding Task5ToGo}"
+                                        Style="{StaticResource buttonTasksStyle}" />
+                                    <Line
+                                        Stroke="#40b1e1"
+                                        StrokeThickness="1"
+                                        X1="0"
+                                        X2="130"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <DockPanel
+                                    Height="70"
+                                    Margin="5,0,5,10"
+                                    VerticalAlignment="Bottom">
+                                    <TextBlock
+                                        DockPanel.Dock="Bottom"
+                                        FontFamily="DidactGothic-Regular.ttf"
+                                        FontSize="10"
+                                        FontStyle="Italic"
+                                        Foreground="#7a8182"
+                                        Text="Pls, pay attention: &#10;objects may be small or big.&#10;&#10;FOR VIEW&#10;roll the mouse wheel!" />
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!--  Tasks view  -->
+                    <Border Grid.Column="1" Background="Transparent">
+                        <Grid>
+                            <ResizeGrip HorizontalAlignment="Right" Style="{StaticResource myResizeGripStyle}" />
+                            <view:Task3View DataContext="{Binding Task3Obj}" Visibility="{Binding IsVisibleState}" />
+                            <view:Task4View DataContext="{Binding Task4Obj}" Visibility="{Binding IsVisibleState}" />
+                            <view:Task5View DataContext="{Binding Task5Obj}" Visibility="{Binding IsVisibleState}" />
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </AdornerDecorator>
+        </Border>
+    </Grid>
+</Window>
