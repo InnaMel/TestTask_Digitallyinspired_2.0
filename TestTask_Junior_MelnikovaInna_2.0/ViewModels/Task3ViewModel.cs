@@ -14,10 +14,12 @@ namespace TestTask_Junior_MelnikovaInna_2._0.ViewModels
     {
         public Task3ViewModel()
         {
-            Load = new RelayCommand((() => Load_Async()), "Load");
-            Clear = new RelayCommand((() => NewModel = null), "Clear");
-            //Load.IsEnabledModificate = false;
-            //Clear = new RelayCommand((() => NewModel = null), "Clear", false);
+            Load = new RelayCommand((() => { Load_Async();}), "Load");
+            Clear = new RelayCommand((() =>
+            {
+                NewModel = null;
+                Clear.IsEnabledModificate = false;
+            }), "Clear", false);
         }
 
         public RelayCommand Load { get; set; }
@@ -41,7 +43,7 @@ namespace TestTask_Junior_MelnikovaInna_2._0.ViewModels
             Clear.IsEnabledModificate = false;
 
             // *** Getting full path of the object
-            string fullPath = "Empty";
+            string fullPath = null;
             try
             {
                 if (openFileDialog.ShowDialog() == true)
@@ -52,25 +54,30 @@ namespace TestTask_Junior_MelnikovaInna_2._0.ViewModels
                 MessageBox.Show("Oops, something went wrong ->" + ex.Message);
             }
 
-            await Task.Run(() =>
+            if (fullPath != null)
             {
-                // *** Getting directly the object
-                ObjReader CurrentHelixObjReader = new ObjReader();
+                await Task.Run(() =>
+                {
+                    // *** Getting directly the object
+                    ObjReader CurrentHelixObjReader = new ObjReader();
 
-                try
-                {
-                    NewModel = CurrentHelixObjReader.Read(fullPath);
-                    NewModel.Freeze();
-                }
-                catch (Exception)
-                {
-                    NewModel = null;
-                }
-            });
+                    try
+                    {
+                        NewModel = CurrentHelixObjReader.Read(fullPath);
+                        NewModel.Freeze();
+                    }
+                    catch (Exception)
+                    {
+                        NewModel = null;
+                    }
+                });
+                Clear.IsEnabledModificate = true;
+            }
+            else
+                Clear.IsEnabledModificate = false;
 
             // *** Enable the buttons
             Load.IsEnabledModificate = true;
-            Clear.IsEnabledModificate = true;
         }
 
         Visibility isVisibleState = Visibility.Collapsed;
